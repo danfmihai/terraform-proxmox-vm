@@ -2,7 +2,7 @@ resource "proxmox_vm_qemu" "test_server" {
   #count       = 1
   name        = "vm-test-tf"
   target_node = "proxmox"
-  clone       = "debian-cloudinit-template"
+  clone       = "ubuntu-cloudinit-template"
   full_clone = false
   cores = 2
   memory  = 2048
