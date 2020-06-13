@@ -1,0 +1,3 @@
+output "IP" {
+    value = prxmox.
+}
