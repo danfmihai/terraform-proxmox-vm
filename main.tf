@@ -1,12 +1,3 @@
-#resource "random_integer" "ip" {
-#  min     = 200
-#  max     = 245
-  #keepers = {
-    # Generate a new integer each time we switch to a new vm
-  #  ip_vm = "${var.ip_vm}"
-  #}
-#}
-
 resource "proxmox_vm_qemu" "vm_server" {
   count       = 1
   name        = "vm-${var.img_type}-tf-${count.index +1}"
@@ -16,7 +7,7 @@ resource "proxmox_vm_qemu" "vm_server" {
   cores = var.cores
   memory  = var.memory
   boot  = "c"
-
+  
   disk {
     id              = 0
     size            = 20
@@ -25,7 +16,7 @@ resource "proxmox_vm_qemu" "vm_server" {
     storage_type    = "zfs"
     iothread        = true
   }
-  
+    
   lifecycle {
     ignore_changes = [
       network,
@@ -40,11 +31,19 @@ resource "proxmox_vm_qemu" "vm_server" {
   ${var.ssh_key2}
   EOF
   
- #provisioner "remote-exec" {
- #   inline = [
- #     "sleep 20",
- #     "ip a"
- #   ]
- # }
+  
+    connection {
+      type = "ssh"
+      user = "ubuntu"
+      private_key = file("~/.ssh/id_rsa")
+      host = self.ssh_host
+    }
+    
+    provisioner "remote-exec" {
+    inline = [
+      "echo 'VM IS RUNNING'",
+      "ip a | grep 192.168.102 | awk '{ print $2 }'",
+    ]
+  }
 
 }

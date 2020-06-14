@@ -1,5 +1,5 @@
 output "vm_id" {
-    value   =   data.proxmox_vm_qemu.vm_server.id
+    value   = "proxmox_vm_qemu.vm_server.connection.host"
     description = "The id of the vm."
 }
 

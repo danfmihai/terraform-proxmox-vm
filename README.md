@@ -4,7 +4,7 @@
 
 The terraform files will provision one or more VMs on a Proxmox node based on a vm template that you previously created.  
 To create a template you can use:
-[https://github.com/danfmihai/proxmox-create-template](https://github.com/danfmihai/proxmox-create-template)  
+[proxmox-create-template repo](https://github.com/danfmihai/proxmox-create-template)  
 or you can create one manualy. Please change the necessary variables.
 
 Reference links:  
