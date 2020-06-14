@@ -1,3 +1,4 @@
 output "IP" {
-    value   =   ${proxmox_vm_qemu.test_server.ipconfig0.ip}
+    value   =   "${proxmox_vm_qemu.test_server.ipconfig0.ip}"
+    description = "The ip of the vm."
 }
