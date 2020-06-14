@@ -1,10 +1,10 @@
 resource "random_integer" "ip" {
   min     = 200
   max     = 245
-  keepers = {
-    # Generate a new integer each time we switch to a new vm 
-    ip_vm = "${var.ip_vm}"
-  }
+  #keepers = {
+    # Generate a new integer each time we switch to a new vm
+  #  ip_vm = "${var.ip_vm}"
+  #}
 }
 
 resource "proxmox_vm_qemu" "test_server" {
@@ -15,7 +15,7 @@ resource "proxmox_vm_qemu" "test_server" {
   full_clone = false
   cores = 2
   memory  = 2048
-  boot  = "c"
+  #boot  = "c"
   
   lifecycle {
     ignore_changes = [
