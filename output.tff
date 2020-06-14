@@ -1,4 +1,5 @@
-output "IP" {
-    value   =   "${proxmox_vm_qemu.test_server.ipconfig0.ip}"
-    description = "The ip of the vm."
+output "vm_id" {
+    value   =   data.proxmox_vm_qemu.vm_server.id
+    description = "The id of the vm."
 }
+

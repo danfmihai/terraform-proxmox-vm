@@ -7,3 +7,5 @@ variable "pm_password" {}
 variable "ssh_key" {}
 variable "ssh_key2" {}
 variable "img_type" {}
+variable "cores" {}
+variable "memory" {}
