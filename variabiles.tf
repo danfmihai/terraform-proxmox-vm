@@ -9,3 +9,5 @@ variable "ssh_key2" {}
 variable "img_type" {}
 variable "cores" {}
 variable "memory" {}
+variable "ip" {}
+variable "gw" {}

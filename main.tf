@@ -24,7 +24,7 @@ resource "proxmox_vm_qemu" "vm_server" {
   }
 
   # Cloud Init Settings
-  ipconfig0 = "ip=192.168.102.20${count.index + 1}/24,gw=192.168.102.1"
+  ipconfig0 = "ip=${var.ip}${count.index + 1}/24,gw=${var.gw}"
   #nameserver = "192.168.102.1"
   sshkeys = <<EOF
   ${var.ssh_key}
