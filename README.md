@@ -2,7 +2,8 @@
 
 [![Terraform Version](https://img.shields.io/badge/Terraform-0.12.26-brightgreen.svg)](https://www.terraform.io/downloads.html) [![Proxmox version](https://img.shields.io/badge/Proxmox-6.2-brightgreen.svg)](https://www.proxmox.com/en/downloads)
 
-The Terraform files will provision a new vm.
+The Terraform files will provision a new vm.  
+Checkout the ["testing"](https://github.com/danfmihai/terraform-proxmox-vm/tree/testing) branch for Jenkins install with a script.
 
 # Usage
 ```
