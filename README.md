@@ -9,10 +9,11 @@ Checkout the ["testing"](https://github.com/danfmihai/terraform-proxmox-vm/tree/
 ```
 git clone https://github.com/danfmihai/terraform-proxmox-vm.git
 cd terraform-proxmox-vm
+touch data.tfvars
 terraform init
 terraform apply --var-file=data.tfvars
 ```
-Following variabiles in data.tfvars file needed:
+Create a file called 'data.tfvars' and add the following variabiles:
 
 ```
 pm_api_url  = "https://proxmox.domain.com:8006/api2/json"
