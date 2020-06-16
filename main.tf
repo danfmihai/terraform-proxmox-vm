@@ -46,7 +46,7 @@ resource "proxmox_vm_qemu" "vm_server" {
 
   provisioner "remote-exec" {
     inline = [
-      "sleep 20",
+      "sleep 5",
       "ls -l /tmp/install.sh",
       "sudo sed -i 's/#ClientAliveInterval\\ 0/ClientAliveInterval\\ 120/g' /etc/ssh/sshd_config",
       "sudo sed -i 's/#ClientAliveCountMax\\ 3/ClientAliveCountMax\\ 720/g' /etc/ssh/sshd_config",
