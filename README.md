@@ -2,7 +2,7 @@
 
 [![Terraform Version](https://img.shields.io/badge/Terraform-0.12.26-brightgreen.svg)](https://www.terraform.io/downloads.html) [![Proxmox version](https://img.shields.io/badge/Proxmox-6.2-brightgreen.svg)](https://www.proxmox.com/en/downloads)
 
-The Terraform files will provision a new vm and use the script to install Jenkins.
+The Terraform files will provision a new vm.
 
 # Usage
 ```

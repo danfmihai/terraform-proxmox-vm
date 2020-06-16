@@ -32,41 +32,4 @@ resource "proxmox_vm_qemu" "vm_server" {
   ${var.ssh_key2}
   EOF
 
-  provisioner "file" {
-    source      = "scripts/install.sh"
-    destination = "/tmp/install.sh"
-  }
-
-  connection {
-    type        = "ssh"
-    user        = "ubuntu"
-    private_key = file("~/.ssh/id_rsa")
-    host        = self.ssh_host
-  }
-
-  provisioner "remote-exec" {
-    inline = [
-      "sleep 5",
-      "ls -l /tmp/install.sh",
-      "sudo sed -i 's/#ClientAliveInterval\\ 0/ClientAliveInterval\\ 120/g' /etc/ssh/sshd_config",
-      "sudo sed -i 's/#ClientAliveCountMax\\ 3/ClientAliveCountMax\\ 720/g' /etc/ssh/sshd_config",
-      "chmod +x /tmp/install.sh",
-      "sudo systemctl restart sshd",
-    ]
-  }
-
-  provisioner "remote-exec" {
-    inline = [
-      "sleep 5",
-      "sudo sh /tmp/install.sh"
-    ]
-
-    connection {
-      type        = "ssh"
-      user        = "ubuntu"
-      private_key = file("~/.ssh/id_rsa")
-      host        = "${var.ip}${var.count_vm}"
-    }
-  }
-
 }
