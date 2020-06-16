@@ -31,28 +31,28 @@ resource "proxmox_vm_qemu" "vm_server" {
   ${var.ssh_key1}
   ${var.ssh_key2}
   EOF
-
+ 
+}
+  
+  resource "null_resource" "script_install" {
+    depends_on =[
+      proxmox_vm_qemu.vm_server,
+    ]
+  
   connection {
     type        = "ssh"
     user        = "ubuntu"
     private_key = file("~/.ssh/id_rsa")
-    host        = self.ssh_host
+    host        = "192.168.102.201"
   }
 
   provisioner "remote-exec" {
     inline = [
       "sudo sed -i 's/#ClientAliveInterval\\ 0/ClientAliveInterval\\ 120/g' /etc/ssh/sshd_config",
       "sudo sed -i 's/#ClientAliveCountMax\\ 3/ClientAliveCountMax\\ 720/g' /etc/ssh/sshd_config",
-      "sudo systemctl restart sshd", # This works Centos. If you use another OS, you must change this line.
+      "sudo systemctl restart sshd", 
     ]
   }
-
-}
-
-resource "null_resource" "config_ssh" {
-  depends_on = [
-    proxmox_vm_qemu.vm_server,
-  ]
 
   provisioner "file" {
     source      = "scripts/install.sh"

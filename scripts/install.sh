@@ -1,5 +1,7 @@
 #!bin/bash
 
+set -x
+
 ip=$(ip a | grep 192 | awk '{ print $2}' | cut -c -15)
 
 # installing Jenkins Ubuntu/Debian
@@ -12,8 +14,7 @@ sudo apt-get update
 sudo apt-get install -y openjdk-8-jdk 
 sudo apt install -y jenkins
 sudo apt autoremove -y
-sudo apt clean
-sudo systemctl status jenkins --no-pager
+sudo systemctl status jenkins --no-pager | grep Active
 echo
 echo "Jenkins will run on port 8080 usually."
 echo "Access Jenkins at http://${ip}:8080"
@@ -21,3 +22,5 @@ echo "***********************************"
 echo "Username is admin and password is:"
 sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 echo "***********************************"
+
+set +x
