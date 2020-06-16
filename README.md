@@ -13,7 +13,7 @@ touch data.tfvars
 terraform init
 terraform apply --var-file=data.tfvars
 ```
-Create a file called 'data.tfvars' and add the following variabiles:
+Create a file called 'data.tfvars' and add the following variabiles and substitute with your values:
 
 ```
 pm_api_url  = "https://proxmox.domain.com:8006/api2/json"
