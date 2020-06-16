@@ -21,6 +21,7 @@ pm_password = "G>3>2:d%eazk"
 ssh_key     = "ssh-rsa ..."
 ssh_key2    =  "ssh-rsa ..."
 img_type    =   "ubuntu"
+count_vm    = 1
 cores   = 2
 memory = 2048
 ip = "192.168.102.20"

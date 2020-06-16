@@ -4,5 +4,5 @@ output "vm_id" {
 }
 
 output "vm_ip" {
-    value = "${var.ip}${var.count_vm}" 
+  value = "${var.ip}${var.count_vm}"
 }
