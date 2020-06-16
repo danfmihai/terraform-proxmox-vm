@@ -1,22 +1,23 @@
 resource "proxmox_vm_qemu" "vm_server" {
   count       = 1
-  name        = "vm-${var.img_type}${count.index +1}-tf"
+  name        = "vm-${var.img_type}${count.index + 1}-tf"
   target_node = "proxmox"
   clone       = "${var.img_type}-cloudinit-template"
-  full_clone = false
-  cores = var.cores
-  memory  = var.memory
-  boot  = "c"
-  
+  full_clone  = false
+  cores       = var.cores
+  memory      = var.memory
+  boot        = "c"
+  bootdisk    = "scsi0"
+  scsihw      = "virtio-scsi-pci"
   disk {
-    id              = 0
-    size            = 20
-    type            = "scsi"
-    storage         = "pveimages"
-    storage_type    = "zfs"
-    iothread        = true
+    id           = 0
+    size         = 10
+    type         = "scsi"
+    storage      = "pveimages"
+    storage_type = "zfs"
+    iothread     = true
   }
-    
+
   lifecycle {
     ignore_changes = [
       network,
@@ -30,38 +31,38 @@ resource "proxmox_vm_qemu" "vm_server" {
   ${var.ssh_key1}
   ${var.ssh_key2}
   EOF
-  
-  
-    connection {
-      type = "ssh"
-      user = "ubuntu"
-      private_key = file("~/.ssh/id_rsa")
-      host = self.ssh_host
-    }
-    
-    provisioner "file" {
-    source      = "scripts/sshd_config"
-    destination = "/tmp/sshd_config"
+
+  connection {
+    type        = "ssh"
+    user        = "ubuntu"
+    private_key = file("~/.ssh/id_rsa")
+    host        = self.ssh_host
   }
 
-   provisioner "remote-exec" {
-        inline = [
-            "sudo cp -r /tmp/sshd_config /etc/ssh/",
-            "systemctl restart sshd", # This works Centos. If you use another OS, you must change this line.
-        ]
-    }
-    
-    provisioner "file" {
+  provisioner "remote-exec" {
+    inline = [
+      "sudo sed -i 's/#ClientAliveInterval\\ 0/ClientAliveInterval\\ 120/g' /etc/ssh/sshd_config",
+      "sudo sed -i 's/#ClientAliveCountMax\\ 3/ClientAliveCountMax\\ 720/g' /etc/ssh/sshd_config",
+      "sudo systemctl restart sshd", # This works Centos. If you use another OS, you must change this line.
+    ]
+  }
+
+}
+
+resource "null_resource" "config_ssh" {
+  depends_on = [
+    proxmox_vm_qemu.vm_server,
+  ]
+
+  provisioner "file" {
     source      = "scripts/install.sh"
     destination = "/tmp/install.sh"
   }
   // change permissions to executable and pipe its output into a new file
   provisioner "remote-exec" {
     inline = [
-      "sleep 30",
-      "sudo chmod +x /tmp/install.sh",
+      "chmod +x /tmp/install.sh",
       "sudo /tmp/install.sh",
     ]
   }
-
 }
