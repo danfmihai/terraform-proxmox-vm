@@ -13,7 +13,7 @@ sudo apt-get install -y openjdk-8-jdk
 sudo apt install -y jenkins
 sudo apt autoremove -y
 sudo apt clean
-sudo systemctl status jenkins
+sudo systemctl status jenkins --no-pager
 echo
 echo "Jenkins will run on port 8080 usually."
 echo "Access Jenkins at http://${ip}:8080"
