@@ -25,6 +25,38 @@ memory = 2048
 ip = "192.168.102.20"
 gw = "192.168.102.1"
 ```
+# Jenkins script
+```
+#!bin/bash
+
+#set -x
+
+ip=$(ip a | grep 192 | awk '{ print $2}' | cut -c -15)
+
+# installing Jenkins Ubuntu/Debian
+wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
+
+sudo sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > \
+    /etc/apt/sources.list.d/jenkins.list'
+
+sudo apt-get update
+sudo apt-get install -y openjdk-8-jdk 
+sudo apt install -y jenkins
+sudo apt autoremove -y
+#sudo systemctl status jenkins --no-pager | grep Active
+sudo usermod -G ubuntu jenkins
+echo
+echo "Jenkins will run on port 8080 usually."
+echo "Access Jenkins at http://${ip}:8080"
+echo "***********************************"
+echo "Username is admin and password is:"
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+echo "***********************************"
+
+# set +x
+
+```
+
 
 The terraform files will provision one or more VMs on a Proxmox node based on a vm template that you previously created.  
 To create a template you can use:
