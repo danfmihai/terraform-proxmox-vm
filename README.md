@@ -11,7 +11,7 @@ cd terraform-proxmox-vm
 terraform init
 terraform apply --var-file=data.tfvars
 ```
-Following variabiles in data.tfvars file needed:
+Create a file called 'data.tfvars' and add the following variabiles:
 
 ```
 pm_api_url  = "https://proxmox.domain.com:8006/api2/json"
