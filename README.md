@@ -58,6 +58,10 @@ echo "***********************************"
 
 ```
 
+# Remove the created VM
+```
+terraform destroy --var-file=data.tfvars
+```
 
 The terraform files will provision one or more VMs (change 'count' variable) on a Proxmox node based on a vm template that you previously created.  
 To create a template you can use:
