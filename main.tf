@@ -41,11 +41,12 @@ resource "proxmox_vm_qemu" "vm_server" {
     
     provisioner "file" {
     source      = "scripts/sshd_config"
-    destination = "/etc/ssh/sshd_config"
+    destination = "/tmp/sshd_config"
   }
 
    provisioner "remote-exec" {
         inline = [
+            "sudo cp -r /tmp/sshd_config /etc/ssh/",
             "systemctl restart sshd", # This works Centos. If you use another OS, you must change this line.
         ]
     }
