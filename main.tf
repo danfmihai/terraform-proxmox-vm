@@ -1,7 +1,7 @@
 resource "proxmox_vm_qemu" "vm_server" {
   count       = var.count_vm
-  desc        = "Provision VM and install Jenkins"
-  name        = "vm-${var.img_type}${count.index + 1}-tf"
+  desc  = "Provision VM and install Jenkins"
+  name        = "vm-${var.img_type}${count.index + 1}-jenkins"
   target_node = "proxmox"
   clone       = "${var.img_type}-cloudinit-template"
   full_clone  = false
