@@ -1,6 +1,6 @@
 #!bin/bash
 
-set -x
+#set -x
 
 ip=$(ip a | grep 192 | awk '{ print $2}' | cut -c -15)
 
@@ -23,4 +23,4 @@ echo "Username is admin and password is:"
 sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 echo "***********************************"
 
-set +x
+# set +x
