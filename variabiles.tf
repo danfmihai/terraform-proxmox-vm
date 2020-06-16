@@ -11,3 +11,4 @@ variable "cores" {}
 variable "memory" {}
 variable "ip" {}
 variable "gw" {}
+variable "count_vm" {}

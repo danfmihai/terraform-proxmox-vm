@@ -1,5 +1,5 @@
 resource "proxmox_vm_qemu" "vm_server" {
-  count       = 1
+  count       = var.count_vm
   name        = "vm-${var.img_type}${count.index + 1}-tf"
   target_node = "proxmox"
   clone       = "${var.img_type}-cloudinit-template"
@@ -31,26 +31,27 @@ resource "proxmox_vm_qemu" "vm_server" {
   ${var.ssh_key1}
   ${var.ssh_key2}
   EOF
- 
-}
-  
-  resource "null_resource" "script_install" {
-    depends_on =[
-      proxmox_vm_qemu.vm_server,
-    ]
-  
+
   connection {
     type        = "ssh"
     user        = "ubuntu"
     private_key = file("~/.ssh/id_rsa")
-    host        = "192.168.102.201"
+    host        = self.ssh_host
   }
+
+}
+
+resource "null_resource" "script_install" {
+  depends_on = [
+    proxmox_vm_qemu.vm_server,
+  ]
 
   provisioner "remote-exec" {
     inline = [
+      "sleep 30",
       "sudo sed -i 's/#ClientAliveInterval\\ 0/ClientAliveInterval\\ 120/g' /etc/ssh/sshd_config",
       "sudo sed -i 's/#ClientAliveCountMax\\ 3/ClientAliveCountMax\\ 720/g' /etc/ssh/sshd_config",
-      "sudo systemctl restart sshd", 
+      "sudo systemctl restart sshd",
     ]
   }
 
@@ -64,5 +65,9 @@ resource "proxmox_vm_qemu" "vm_server" {
       "chmod +x /tmp/install.sh",
       "sudo /tmp/install.sh",
     ]
+  }
+
+  provisioner "proxmox" {
+    action = "sshbackward"
   }
 }
