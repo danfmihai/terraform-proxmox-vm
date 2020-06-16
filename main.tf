@@ -1,6 +1,6 @@
 resource "proxmox_vm_qemu" "vm_server" {
   count       = 1
-  name        = "vm-${var.img_type}-tf-${count.index +1}"
+  name        = "vm-${var.img_type}${count.index +1}-tf"
   target_node = "proxmox"
   clone       = "${var.img_type}-cloudinit-template"
   full_clone = false
@@ -27,7 +27,7 @@ resource "proxmox_vm_qemu" "vm_server" {
   ipconfig0 = "ip=${var.ip}${count.index + 1}/24,gw=${var.gw}"
   #nameserver = "192.168.102.1"
   sshkeys = <<EOF
-  ${var.ssh_key}
+  ${var.ssh_key1}
   ${var.ssh_key2}
   EOF
   
@@ -39,10 +39,27 @@ resource "proxmox_vm_qemu" "vm_server" {
       host = self.ssh_host
     }
     
-    provisioner "remote-exec" {
+    provisioner "file" {
+    source      = "scripts/sshd_config"
+    destination = "/etc/ssh/sshd_config"
+  }
+
+   provisioner "remote-exec" {
+        inline = [
+            "systemctl restart sshd", # This works Centos. If you use another OS, you must change this line.
+        ]
+    }
+    
+    provisioner "file" {
+    source      = "scripts/install.sh"
+    destination = "/tmp/install.sh"
+  }
+  // change permissions to executable and pipe its output into a new file
+  provisioner "remote-exec" {
     inline = [
-      "echo 'VM IS RUNNING'",
-      "ip a | grep 192.168.102 | awk '{ print $2 }'",
+      "sleep 30",
+      "sudo chmod +x /tmp/install.sh",
+      "sudo /tmp/install.sh",
     ]
   }
 
