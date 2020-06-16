@@ -8,10 +8,11 @@ The Terraform files will provision a new vm and use the script to install Jenkin
 ```
 git clone https://github.com/danfmihai/terraform-proxmox-vm.git
 cd terraform-proxmox-vm
+touch data.tfvars
 terraform init
 terraform apply --var-file=data.tfvars
 ```
-Create a file called 'data.tfvars' and add the following variabiles:
+Create a file called 'data.tfvars' and add the following variabiles and substitute with your values:
 
 ```
 pm_api_url  = "https://proxmox.domain.com:8006/api2/json"
