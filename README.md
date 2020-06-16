@@ -27,6 +27,10 @@ memory = 2048
 ip = "192.168.102.20"
 gw = "192.168.102.1"
 ```
+# Remove the created VM
+```
+terraform destroy --var-file=data.tfvars
+```
 
 The terraform files will provision one or more VMs on a Proxmox node based on a vm template that you previously created.  
 To create a template you can use:
