@@ -19,7 +19,7 @@ Create a file called 'data.tfvars' and add the following variabiles and substitu
 pm_api_url  = "https://proxmox.domain.com:8006/api2/json"
 pm_user     = "root@pam"
 pm_password = "G>3>2:d%eazk"
-ssh_key     = "ssh-rsa ..."
+ssh_key1     = "ssh-rsa ..."
 ssh_key2    =  "ssh-rsa ..."
 img_type    =   "ubuntu"
 count_vm    = 1
