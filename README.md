@@ -2,6 +2,8 @@
 
 [![Terraform Version](https://img.shields.io/badge/Terraform-0.12.26-brightgreen.svg)](https://www.terraform.io/downloads.html) [![Proxmox version](https://img.shields.io/badge/Proxmox-6.2-brightgreen.svg)](https://www.proxmox.com/en/downloads)
 
+The Terraform files will provision a new vm and use the script to install Jenkins.
+
 # Usage
 ```
 git clone https://github.com/danfmihai/terraform-proxmox-vm.git
@@ -9,7 +11,8 @@ cd terraform-proxmox-vm
 terraform init
 terraform apply --var-file=data.tfvars
 ```
-Following variabiles in data.tfvars file:
+Following variabiles in data.tfvars file needed:
+
 ```
 pm_api_url  = "https://proxmox.domain.com:8006/api2/json"
 pm_user     = "root@pam"
