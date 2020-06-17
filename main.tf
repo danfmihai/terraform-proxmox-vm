@@ -1,7 +1,7 @@
 resource "proxmox_vm_qemu" "vm_server" {
   count       = var.count_vm
   desc  = "Provision VM and install Jenkins"
-  name        = "vm-${var.img_type}${count.index + 1}-jenkins"
+  name        = "vm-${var.img_type}-${count.index + 1}-nc"
   target_node = "proxmox"
   clone       = "${var.img_type}-cloudinit-template"
   full_clone  = false
@@ -48,8 +48,7 @@ resource "proxmox_vm_qemu" "vm_server" {
   provisioner "remote-exec" {
     inline = [
       "sleep 5",
-      "ls -l /tmp/install-nc
-      .sh",
+      "ls -l /tmp/install-nc.sh",
       "sudo sed -i 's/#ClientAliveInterval\\ 0/ClientAliveInterval\\ 120/g' /etc/ssh/sshd_config",
       "sudo sed -i 's/#ClientAliveCountMax\\ 3/ClientAliveCountMax\\ 720/g' /etc/ssh/sshd_config",
       "chmod +x /tmp/install-nc.sh",

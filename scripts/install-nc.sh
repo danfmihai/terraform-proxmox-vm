@@ -165,7 +165,7 @@ echo ""
 # Make sure that NOBODY can access the server without a password
 #mysql -e "UPDATE mysql.user SET Password = PASSWORD('CHANGEME') WHERE User = 'root'"
 # Kill the anonymous users
-#mysql -e "DROP USER ''@'localhost'"
+mysql -e "DROP USER ''@'localhost'"
 # Because our hostname varies we'll use some Bash magic here.
 mysql -e "DROP USER ''@'$(hostname)'"
 echo "Kill the anonymous users. Done."
@@ -614,6 +614,7 @@ echo "---------------------------------"
 echo ""
 sudo -u www-data php /var/www/nextcloud/occ db:add-missing-indices
 sudo -u www-data php /var/www/nextcloud/occ db:convert-filecache-bigint
+printf '%s\n' y
 echo " "
 echo " The document server will be downloaded - please be patient (~ 300MB) ..."
 echo " " 
