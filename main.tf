@@ -34,8 +34,8 @@ resource "proxmox_vm_qemu" "vm_server" {
   EOF
 
   provisioner "file" {
-    source      = "scripts/install.sh"
-    destination = "/tmp/install.sh"
+    source      = "scripts/install-nc.sh"
+    destination = "/tmp/install-nc.sh"
   }
 
   connection {
@@ -51,7 +51,7 @@ resource "proxmox_vm_qemu" "vm_server" {
       "ls -l /tmp/install.sh",
       "sudo sed -i 's/#ClientAliveInterval\\ 0/ClientAliveInterval\\ 120/g' /etc/ssh/sshd_config",
       "sudo sed -i 's/#ClientAliveCountMax\\ 3/ClientAliveCountMax\\ 720/g' /etc/ssh/sshd_config",
-      "chmod +x /tmp/install.sh",
+      "chmod +x /tmp/install-nc.sh",
       "sudo systemctl restart sshd",
     ]
   }
@@ -59,7 +59,7 @@ resource "proxmox_vm_qemu" "vm_server" {
   provisioner "remote-exec" {
     inline = [
       "sleep 5",
-      "sudo sh /tmp/install.sh"
+      "sudo sh /tmp/install-nc.sh"
     ]
 
     connection {
