@@ -1,22 +1,31 @@
 resource "proxmox_vm_qemu" "vm_server" {
   count       = var.count_vm
-  desc        = "Terraform VM provision"
+  desc        = "Terraform VM provision for PORXMOX"
+  agent       = 1
+  os_type     = "cloud-init"
   name        = "vm-${var.img_type}-${count.index + 1}"
-  target_node = "proxmox"
+  target_node = var.proxmox_host
   clone       = "${var.img_type}-cloudinit-template"
   full_clone  = false
   cores       = var.cores
   memory      = var.memory
+  cpu         = "host"
   boot        = "c"
   bootdisk    = "scsi0"
   scsihw      = "virtio-scsi-pci"
+  
   disk {
-    id           = 0
-    size         = 10
+    slot         = 0
+    size         = "10G"
     type         = "scsi"
-    storage      = "pveimages"
-    storage_type = "zfs"
-    iothread     = true
+    storage      = "nvme"
+    # storage_type = "scsi"
+    iothread     = 1
+  }
+  
+  network {
+    model = "virtio"
+    bridge = "vmbr0"
   }
 
   lifecycle {

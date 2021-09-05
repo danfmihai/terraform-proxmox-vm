@@ -1,9 +1,6 @@
 variable "pm_api_url" {}
-
-variable "pm_user" {}
-
-variable "pm_password" {}
-
+variable "token_id" {}
+variable "token_secret" {}
 variable "ssh_key1" {}
 variable "ssh_key2" {}
 variable "img_type" {}
@@ -12,3 +9,4 @@ variable "memory" {}
 variable "ip" {}
 variable "gw" {}
 variable "count_vm" {}
+variable "proxmox_host" {}
