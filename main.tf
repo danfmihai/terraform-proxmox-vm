@@ -42,7 +42,6 @@ resource "proxmox_vm_qemu" "vm_server" {
   #EOF
   sshkeys = <<EOF
   ${var.ssh_key1}
-  ${var.ssh_key2}
   EOF
 
 }

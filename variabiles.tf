@@ -2,7 +2,7 @@ variable "pm_api_url" {}
 variable "token_id" {}
 variable "token_secret" {}
 variable "ssh_key1" {}
-variable "ssh_key2" {}
+
 variable "img_type" {}
 variable "cores" {}
 variable "memory" {}
