@@ -6,7 +6,7 @@ resource "proxmox_vm_qemu" "vm_server" {
   name        = "vm-${var.img_type}-${count.index + 1}"
   target_node = var.proxmox_host
   clone       = "${var.img_type}-cloudinit-template"
-  full_clone  = false
+  full_clone  = true
   cores       = var.cores
   memory      = var.memory
   cpu         = "host"
